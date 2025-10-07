@@ -3,7 +3,7 @@ import {
     DefaultTheme,
     ThemeProvider,
 } from "@react-navigation/native";
-import { Stack } from "expo-router";
+import { Drawer } from "expo-router/drawer";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "../global.css";
@@ -21,13 +21,28 @@ export default function RootLayout() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                    name="modal"
-                    options={{ presentation: "modal", title: "Modal" }}
-                />
-            </Stack>
+            <Drawer
+                screenOptions={{
+                    headerShown: true,
+                    headerTitle: "FormBase",
+                    headerTitleAlign: "center",
+                    drawerType: "front",
+                }}
+            >
+                <Drawer.Screen
+                    name="home"
+                    options={{ title: "Home" }}
+                ></Drawer.Screen>
+                <Drawer.Screen
+                    name="about"
+                    options={{ title: "About" }}
+                ></Drawer.Screen>
+                <Drawer.Screen
+                    name="myforms"
+                    options={{ title: "My Forms" }}
+                ></Drawer.Screen>
+            </Drawer>
+
             <StatusBar style="auto" />
         </ThemeProvider>
     );
