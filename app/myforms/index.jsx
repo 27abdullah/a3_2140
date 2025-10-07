@@ -1,23 +1,39 @@
 import { useRouter } from "expo-router";
-import { Pressable, Text } from "react-native";
-export default function View() {
+import { useEffect, useState } from "react";
+import { Pressable, Text, View } from "react-native";
+import Cards from "../../components/forms/cards.jsx";
+import { getForms } from "../../scripts/app.js";
+
+export default function Index() {
     const router = useRouter();
+    const [forms, setForms] = useState([]);
     const onPress = (link) => {
         router.push("/myforms/" + link);
     };
-    const id = 1;
+
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const forms = await getForms();
+                setForms(forms);
+            };
+            fetchData();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }, []);
 
     return (
-        <>
-            <Pressable onPress={() => onPress("add")}>
-                <Text>Add</Text>
+        <View className="h-full">
+            <Pressable
+                className="bg-blue-500 p-4 rounded-lg m-4 h-20 justify-center items-center active:bg-blue-600"
+                onPress={() => onPress("create")}
+            >
+                <Text className="text-white text-center font-semibold text-lg">
+                    + Add Form
+                </Text>
             </Pressable>
-            <Pressable onPress={() => onPress(id + "/form")}>
-                <Text>Edit</Text>
-            </Pressable>
-            <Pressable onPress={() => onPress(id + "/records")}>
-                <Text>View</Text>
-            </Pressable>
-        </>
+            <Cards cards={forms} />
+        </View>
     );
 }
