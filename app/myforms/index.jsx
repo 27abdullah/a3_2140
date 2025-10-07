@@ -5,16 +5,17 @@ export default function View() {
     const onPress = (link) => {
         router.push("/myforms/" + link);
     };
+    const id = 1;
 
     return (
         <>
             <Pressable onPress={() => onPress("add")}>
                 <Text>Add</Text>
             </Pressable>
-            <Pressable onPress={() => onPress("edit")}>
+            <Pressable onPress={() => onPress(id + "/form")}>
                 <Text>Edit</Text>
             </Pressable>
-            <Pressable onPress={() => onPress("/view")}>
+            <Pressable onPress={() => onPress(id + "/records")}>
                 <Text>View</Text>
             </Pressable>
         </>

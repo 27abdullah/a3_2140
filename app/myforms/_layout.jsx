@@ -21,9 +21,7 @@ export default function Layout() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="forms" options={{ headerShown: false }} />
-            </Stack>
+            <Stack screenOptions={{ headerShown: false }} />
 
             <StatusBar style="auto" />
         </ThemeProvider>

@@ -21,7 +21,20 @@ export default function Layout() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Tabs></Tabs>
+            <Tabs>
+                <Tabs.Screen
+                    name="form"
+                    options={{ title: "Form", headerShown: false }}
+                />
+                <Tabs.Screen
+                    name="records"
+                    options={{ title: "Records", headerShown: false }}
+                />
+                <Tabs.Screen
+                    name="map"
+                    options={{ title: "Map", headerShown: false }}
+                />
+            </Tabs>
 
             <StatusBar style="auto" />
         </ThemeProvider>
