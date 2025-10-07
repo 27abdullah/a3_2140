@@ -27,7 +27,7 @@ export default function Index() {
         <View className="h-full">
             <Pressable
                 className="bg-blue-500 p-4 rounded-lg m-4 h-20 justify-center items-center active:bg-blue-600"
-                onPress={() => onPress("create")}
+                onPress={() => onPress("/add")}
             >
                 <Text className="text-white text-center font-semibold text-lg">
                     + Add Form

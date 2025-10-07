@@ -6,7 +6,6 @@ export default function Cards({ cards }) {
         <View className="flex-1 bg-gray-50">
             <ScrollView className="flex-1 pt-4">
                 {cards.map((card) => {
-                    console.log("HERE ", card);
                     return (
                         <Card
                             key={card.id}

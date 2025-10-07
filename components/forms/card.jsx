@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Card({ id, name, description, username }) {
-    console.log(id);
     return (
         <View
             className="bg-white rounded-xl shadow-lg p-4 mb-4 mx-4 border border-gray-100"
