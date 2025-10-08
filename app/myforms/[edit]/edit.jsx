@@ -12,7 +12,6 @@ export default function Edit() {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log(id);
             const form = await getForm(id);
             setName(form[0].name);
             setDescription(form[0].description);
@@ -42,7 +41,7 @@ export default function Edit() {
                 placeholder="Form Description"
             />
             <Pressable
-                className="bg-blue-600 rounded-lg py-3 active:bg-blue-700"
+                className="bg-emerald-600 rounded-lg py-3 active:bg-emerald-700"
                 onPress={async () => {
                     await editForm(id, name, description);
                     router.push("/myforms");

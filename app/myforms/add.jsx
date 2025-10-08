@@ -36,7 +36,7 @@ export default function Add() {
 
             <Pressable
                 onPress={submitForm}
-                className="bg-blue-600 rounded-lg py-3 active:bg-blue-700"
+                className="bg-emerald-600 rounded-lg py-3 active:bg-emerald-700"
             >
                 <Text className="text-white text-center font-semibold text-base">
                     Submit

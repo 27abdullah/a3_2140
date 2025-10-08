@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import {
     DarkTheme,
     DefaultTheme,
@@ -21,22 +22,36 @@ export default function Layout() {
         <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-            <Tabs>
+            <Tabs screenOptions={{ tabBarActiveTintColor: "#10B981" }}>
                 <Tabs.Screen
                     name="form"
-                    options={{ title: "Form", headerShown: false }}
+                    options={{
+                        title: "Form",
+                        headerShown: false,
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="home" size={size} color={color} />
+                        ),
+                    }}
                 />
                 <Tabs.Screen
                     name="records"
-                    options={{ title: "Records", headerShown: false }}
+                    options={{
+                        title: "Records",
+                        headerShown: false,
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="list" size={size} color={color} />
+                        ),
+                    }}
                 />
                 <Tabs.Screen
                     name="map"
-                    options={{ title: "Map", headerShown: false }}
-                />
-                <Tabs.Screen
-                    name="edit"
-                    options={{ href: null, title: "Edit", headerShown: false }}
+                    options={{
+                        title: "Map",
+                        headerShown: false,
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="map" size={size} color={color} />
+                        ),
+                    }}
                 />
             </Tabs>
 

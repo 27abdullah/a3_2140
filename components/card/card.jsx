@@ -35,7 +35,7 @@ export default function Card({ id, name, description, username }) {
                     onPress={() => {
                         router.push("/myforms/" + id + "/form");
                     }}
-                    className="flex-1 bg-blue-500 py-3 rounded-lg active:bg-blue-600"
+                    className="flex-1 bg-emerald-600 py-3 rounded-lg active:bg-emerald-600"
                 >
                     <Text className="text-white text-center font-semibold">
                         View
@@ -46,7 +46,7 @@ export default function Card({ id, name, description, username }) {
                     onPress={() => {
                         router.push("/myforms/" + id + "/edit");
                     }}
-                    className="flex-1 bg-amber-500 py-3 rounded-lg active:bg-amber-600"
+                    className="flex-1 bg-violet-500 py-3 rounded-lg active:bg-violet-600"
                 >
                     <Text className="text-white text-center font-semibold">
                         Edit

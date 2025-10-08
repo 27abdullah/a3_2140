@@ -3,7 +3,7 @@ import Card from "./card.jsx";
 
 export default function Cards({ cards }) {
     return (
-        <View className="flex-1 bg-gray-50">
+        <View className="flex-1 bg-gray-100">
             <ScrollView className="flex-1 pt-4">
                 {cards.map((card) => {
                     return (

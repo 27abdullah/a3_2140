@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import Cards from "../../components/forms/cards.jsx";
+import Cards from "../../components/card/cards.jsx";
 import { getForms } from "../../scripts/app.js";
 
 export default function Index() {
@@ -24,12 +24,12 @@ export default function Index() {
     }, []);
 
     return (
-        <View className="h-full bg-gray-50">
+        <View className="h-full bg-gray-100">
             <Pressable
-                className="bg-blue-500 p-4 rounded-lg m-4 h-20 justify-center items-center active:bg-blue-600"
+                className="bg-emerald-300 p-4 rounded-lg m-4 h-20 justify-center items-center active:bg-emerald-600"
                 onPress={() => onPress("/add")}
             >
-                <Text className="text-white text-center font-semibold text-lg">
+                <Text className="text-black text-center font-semibold text-xl">
                     + Add Form
                 </Text>
             </Pressable>
