@@ -1,6 +1,25 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { deleteForm } from "../../scripts/app";
 
 export default function Card({ id, name, description, username }) {
+    const router = useRouter();
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true);
+            await deleteForm(id);
+            router.replace("/myforms");
+        } catch (error) {
+            Alert.alert("Error", "Failed to delete form");
+            console.error(error);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <View
             className="bg-white rounded-xl shadow-lg p-4 mb-4 mx-4 border border-gray-100"
@@ -13,7 +32,9 @@ export default function Card({ id, name, description, username }) {
 
             <View className="flex-row justify-between items-center gap-2">
                 <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() => {
+                        router.push("/myforms/" + id + "/form");
+                    }}
                     className="flex-1 bg-blue-500 py-3 rounded-lg active:bg-blue-600"
                 >
                     <Text className="text-white text-center font-semibold">
@@ -22,7 +43,9 @@ export default function Card({ id, name, description, username }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() => {
+                        router.push("/myforms/" + id + "/edit");
+                    }}
                     className="flex-1 bg-amber-500 py-3 rounded-lg active:bg-amber-600"
                 >
                     <Text className="text-white text-center font-semibold">
@@ -31,11 +54,16 @@ export default function Card({ id, name, description, username }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => {}}
-                    className="flex-1 bg-red-500 py-3 rounded-lg active:bg-red-600"
+                    onPress={handleDelete}
+                    disabled={isDeleting}
+                    className={`flex-1 py-3 rounded-lg ${
+                        isDeleting
+                            ? "bg-red-300"
+                            : "bg-red-500 active:bg-red-600"
+                    }`}
                 >
                     <Text className="text-white text-center font-semibold">
-                        Delete
+                        {isDeleting ? "Deleting..." : "Delete"}
                     </Text>
                 </TouchableOpacity>
             </View>

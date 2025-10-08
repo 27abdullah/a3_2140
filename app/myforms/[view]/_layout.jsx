@@ -34,6 +34,10 @@ export default function Layout() {
                     name="map"
                     options={{ title: "Map", headerShown: false }}
                 />
+                <Tabs.Screen
+                    name="edit"
+                    options={{ href: null, title: "Edit", headerShown: false }}
+                />
             </Tabs>
 
             <StatusBar style="auto" />

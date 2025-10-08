@@ -49,6 +49,10 @@ async function apiRequest(endpoint, method = "GET", body = null) {
         throw new Error(`HTTP error! status: ${response.status} – ${errText}`);
     }
 
+    if (method === "DELETE") {
+        return null;
+    }
+
     // Return the response as JSON
     return response.json();
 }
@@ -58,15 +62,19 @@ async function apiRequest(endpoint, method = "GET", body = null) {
  *
  * @returns {Promise<object>} - The created form object.
  */
-async function createForm() {
+async function createForm(name, description) {
     return apiRequest("/form", "POST", {
-        name: "Books",
-        description: "A form to store details about my programming books",
+        name,
+        description,
     });
 }
 
 async function getForms() {
     return apiRequest("/form");
+}
+
+async function getForm(id) {
+    return apiRequest(`/form?id=eq.${id}`);
 }
 
 /**
@@ -98,6 +106,17 @@ async function insertRecord(formId, record) {
     });
 }
 
+async function deleteForm(formId) {
+    return apiRequest(`/form?id=eq.${formId}`, "DELETE");
+}
+
+async function editForm(formId, name, description) {
+    return apiRequest(`/form?id=eq.${formId}`, "PATCH", {
+        name,
+        description,
+    });
+}
+
 /**
  * Function to filter records by JSONB fields.
  * Example: category contains "JavaScript" AND price > 50.
@@ -117,74 +136,11 @@ async function filterRecords(formId) {
     return apiRequest(query);
 }
 
-/**
- * Main function to demonstrate API usage for the Books form.
- *
- * Steps:
- *   1. Create the "Books" form.
- *   2. Insert fields (title, category, price).
- *   3. Insert book records (examples).
- *   4. Filter records by conditions.
- */
-async function main() {
-    try {
-        // 1. Create form
-        const createdForm = await createForm();
-        const formId = createdForm[0].id;
-        console.log("Created form:", createdForm);
-
-        // 2. Insert fields one by one
-        const field1 = await insertField(formId, {
-            name: "title",
-            field_type: "text",
-            required: true,
-            order_index: 0,
-        });
-        const field2 = await insertField(formId, {
-            name: "category",
-            field_type: "dropdown",
-            required: true,
-            options: { choices: ["JavaScript", "Python", "Databases"] },
-            order_index: 1,
-        });
-        const field3 = await insertField(formId, {
-            name: "price",
-            field_type: "text",
-            required: true,
-            is_num: true,
-            order_index: 2,
-        });
-        console.log("Inserted fields:", [field1, field2, field3]);
-
-        // 3. Insert records one by one
-        const rec1 = await insertRecord(formId, {
-            values: {
-                title: "Eloquent JavaScript",
-                category: "JavaScript",
-                price: 45,
-            },
-        });
-        const rec2 = await insertRecord(formId, {
-            values: { title: "Fluent Python", category: "Python", price: 60 },
-        });
-        const rec3 = await insertRecord(formId, {
-            values: {
-                title: "Designing Data-Intensive Applications",
-                category: "Databases",
-                price: 80,
-            },
-        });
-        console.log("Inserted records:", [rec1, rec2, rec3]);
-
-        // 4. Filter records
-        const filtered = await filterRecords(formId);
-        console.log("Filtered records:", filtered);
-    } catch (error) {
-        console.error("Error:", error.message);
-    }
-}
-
 // Execute the main function
 module.exports = {
     getForms,
+    editForm,
+    getForm,
+    createForm,
+    deleteForm,
 };

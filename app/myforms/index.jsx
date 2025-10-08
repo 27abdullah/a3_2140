@@ -24,7 +24,7 @@ export default function Index() {
     }, []);
 
     return (
-        <View className="h-full">
+        <View className="h-full bg-gray-50">
             <Pressable
                 className="bg-blue-500 p-4 rounded-lg m-4 h-20 justify-center items-center active:bg-blue-600"
                 onPress={() => onPress("/add")}
