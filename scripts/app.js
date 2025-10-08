@@ -143,4 +143,5 @@ module.exports = {
     getForm,
     createForm,
     deleteForm,
+    insertField,
 };

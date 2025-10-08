@@ -8,6 +8,11 @@ export default function Add() {
     const [description, setDescription] = useState("");
     const router = useRouter();
     const submitForm = async () => {
+        if (name.trim() === "" || description.trim() === "") {
+            alert("Please fill in all fields.");
+            return;
+        }
+
         const res = await createForm(name, description);
         router.push("/myforms");
     };
