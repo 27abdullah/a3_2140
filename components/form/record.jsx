@@ -8,7 +8,23 @@ export default function AddRecord({ id, reload }) {
     const [values, setValues] = useState([]);
 
     const createRecord = async () => {
-        //TODO do valiation
+        try {
+            fields.map((field, index) => {
+                console.log(field, values[index]);
+                // Required field validation
+                if (field.required && values[index] == "") {
+                    throw new Error(`${field.name} is required`);
+                }
+                // Number field validation
+                if (field.is_num && isNaN(values[index])) {
+                    throw new Error(`${field.name} must be a number`);
+                }
+            });
+        } catch (error) {
+            Alert.alert("Invalid - " + error.message);
+            return;
+        }
+
         try {
             await insertRecord(id, {
                 values: fields.reduce((acc, field) => {

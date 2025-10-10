@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import { deleteRecord } from "../../scripts/app.js";
 
 export default function Card({ id, values, setRecords }) {
