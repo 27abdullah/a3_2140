@@ -10,7 +10,6 @@ export default function AddRecord({ id, reload }) {
     const createRecord = async () => {
         try {
             fields.map((field, index) => {
-                console.log(field, values[index]);
                 // Required field validation
                 if (field.required && values[index] == "") {
                     throw new Error(`${field.name} is required`);

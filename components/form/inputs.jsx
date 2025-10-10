@@ -51,11 +51,11 @@ function DropdownField({ options, setValue, value }) {
 }
 
 function LocationField() {
-    return <Text>TODO</Text>;
+    return (
+        <View>
+            <Text>TODO</Text>
+        </View>
+    );
 }
 
-function ImageField() {
-    return <Text>TODO</Text>;
-}
-
-export { DropdownField, ImageField, LocationField, MultilineField, TextField };
+export { DropdownField, LocationField, MultilineField, TextField };

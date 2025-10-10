@@ -1,4 +1,4 @@
-import { Alert, Pressable, Text, View } from "react-native";
+import { Alert, Image, Pressable, Text, View } from "react-native";
 import { deleteRecord } from "../../scripts/app.js";
 
 export default function Card({ id, values, setRecords }) {
@@ -24,15 +24,22 @@ export default function Card({ id, values, setRecords }) {
                             <Text className="text-xs text-gray-500 font-medium mb-1">
                                 {field.name}
                             </Text>
-                            <Text className="text-base text-gray-900">
-                                {field.value || "(empty)"}
-                            </Text>
+                            {field.field_type === "image" && field.value ? (
+                                <Image
+                                    source={{ uri: field.value }}
+                                    className="w-full h-48 rounded-lg"
+                                />
+                            ) : (
+                                <Text className="text-base text-gray-900">
+                                    {field.value || "(empty)"}
+                                </Text>
+                            )}
                         </View>
                     ))}
             </View>
             <Pressable
                 onPress={() => deleteHandler()}
-                className="ml-auto bg-red-200 max-w-min rounded-full p-2 active:bg-gray-200"
+                className="ml-auto bg-red-200 max-w-min rounded-full p-2 mt-2 active:bg-gray-200"
             >
                 <Text className="text-gray-600 font-medium px-2 w-min">✕</Text>
             </Pressable>

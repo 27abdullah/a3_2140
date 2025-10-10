@@ -1,11 +1,12 @@
 import { Text, View } from "react-native";
 import {
     DropdownField,
-    ImageField,
     LocationField,
     MultilineField,
     TextField,
 } from "./inputs.jsx";
+
+import ImageField from "../image.jsx";
 
 export default function Field({
     field_type,
