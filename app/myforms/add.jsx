@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { createForm } from "../../scripts/app";
 
 export default function Add() {
@@ -9,7 +9,7 @@ export default function Add() {
     const router = useRouter();
     const submitForm = async () => {
         if (name.trim() === "" || description.trim() === "") {
-            alert("Please fill in all fields.");
+            Alert.alert("Please fill in all fields.");
             return;
         }
 

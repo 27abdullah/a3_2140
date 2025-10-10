@@ -106,6 +106,10 @@ async function insertRecord(formId, record) {
     });
 }
 
+async function deleteRecord(recordId) {
+    return apiRequest(`/record?id=eq.${recordId}`, "DELETE");
+}
+
 async function deleteForm(formId) {
     return apiRequest(`/form?id=eq.${formId}`, "DELETE");
 }
@@ -115,6 +119,10 @@ async function editForm(formId, name, description) {
         name,
         description,
     });
+}
+
+async function getFields(formId) {
+    return apiRequest(`/field?form_id=eq.${formId}`);
 }
 
 /**
@@ -136,6 +144,10 @@ async function filterRecords(formId) {
     return apiRequest(query);
 }
 
+async function getRecords(formId) {
+    return apiRequest(`/record?form_id=eq.${formId}`);
+}
+
 // Execute the main function
 module.exports = {
     getForms,
@@ -144,4 +156,9 @@ module.exports = {
     createForm,
     deleteForm,
     insertField,
+    insertRecord,
+    filterRecords,
+    getRecords,
+    getFields,
+    deleteRecord,
 };

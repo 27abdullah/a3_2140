@@ -1,16 +1,25 @@
 import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { Switch } from "react-native-gesture-handler";
-import { insertField } from "../../scripts/app";
+import { getFields, insertField } from "../../scripts/app.js";
 
-export default function ManageFields({ id }) {
+export default function ManageFields({ id, setReload }) {
     const [open, setOpen] = useState(false);
     const [fieldName, setFieldName] = useState("");
     const [isRequired, setIsRequired] = useState(false);
     const [isNumeric, setIsNumeric] = useState(false);
     const [selectedType, setSelectedType] = useState("");
     const [dropdownOptions, setDropdownOptions] = useState("");
+    const [numberOfFields, setNumberOfFields] = useState(null);
+
+    useEffect(() => {
+        async function fetchData() {
+            const fields = await getFields(id);
+            setNumberOfFields(fields.length);
+        }
+        fetchData();
+    }, []);
 
     const handleTypeChange = (value) => {
         setSelectedType(value);
@@ -18,33 +27,67 @@ export default function ManageFields({ id }) {
             setDropdownOptions("");
         }
     };
+
     const addField = async () => {
+        if (numberOfFields == null) {
+            Alert.alert("Please wait a moment and try again.");
+            return;
+        }
+
         const payload = {
             name: fieldName,
             field_type: selectedType,
             required: isRequired,
-            is_num: isNumeric, // TODO fix below two
-            order_index: 1,
-            username: "testuser",
+            is_num: isNumeric,
+            order_index: numberOfFields + 1,
         };
         if (dropdownOptions.trim() !== "") {
-            // payload.options = dropdownOptions
-            //     .split(",")
-            //     .map((opt) => opt.trim())
-            //     .filter((opt) => opt !== "");
+            payload.options = {
+                nameofdropdown: dropdownOptions
+                    .split(",")
+                    .map((opt) => opt.trim())
+                    .filter((opt) => opt !== ""),
+            };
         }
-        await insertField(id, payload);
-        router.refresh();
+
+        if (
+            fieldName.trim() === "" ||
+            selectedType.trim() === "" ||
+            (selectedType === "dropdown" && dropdownOptions.trim() === "")
+        ) {
+            Alert.alert("Please fill in all required fields.");
+            return;
+        }
+
+        // Call the insertField function from app.js
+        try {
+            await insertField(id, payload);
+            setNumberOfFields(numberOfFields + 1);
+        } catch (error) {
+            console.error("Error adding field:", error);
+            Alert.alert(
+                "There was an error adding the field. Please try again."
+            );
+            return;
+        }
+
+        setOpen(false);
+        setFieldName("");
+        setIsRequired(false);
+        setIsNumeric(false);
+        setSelectedType("");
+        setDropdownOptions("");
+        setReload((prev) => !prev);
     };
 
     return (
-        <View className="bg-white mb-5 rounded-xl">
+        <View className="bg-white mb-5 rounded-xl p-6">
             <Text className=" py-2 text-center text-xl font-bold rounded-t-xl">
                 Manage Fields
             </Text>
 
             {open && (
-                <View className="bg-white rounded-t-3xl p-6">
+                <View className="bg-white rounded-t-3xl ">
                     <View className="flex-row items-center justify-between mb-6">
                         <Text className="text-lg font-semibold text-gray-900">
                             Add a Field
@@ -119,7 +162,10 @@ export default function ManageFields({ id }) {
                         </View>
                     </View>
 
-                    <Pressable className="bg-blue-600 rounded-lg py-3 active:bg-blue-700">
+                    <Pressable
+                        className="bg-violet-500 rounded-lg py-3 active:bg-violet-600"
+                        onPress={addField}
+                    >
                         <Text className="text-white text-center font-semibold text-base">
                             Save Field
                         </Text>
@@ -128,7 +174,7 @@ export default function ManageFields({ id }) {
             )}
             {!open && (
                 <Pressable onPress={() => setOpen(true)}>
-                    <Text className="text-lg font-semibold text-blue-500 p-6">
+                    <Text className="text-lg font-semibold text-blue-500">
                         Add a Field
                     </Text>
                 </Pressable>
