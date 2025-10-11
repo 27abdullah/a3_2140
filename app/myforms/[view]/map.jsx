@@ -73,7 +73,7 @@ export default function Map() {
 
     if (records.length === 0) {
         return (
-            <View className="flex-1 justify-center items-center bg-gray-50 p-4">
+            <View className="flex-1 justify-center items-center bg-gray-50 p-12">
                 <View className="bg-white p-6 rounded-lg shadow text-center">
                     <View className="mb-4">
                         <Text className="text-lg font-semibold mb-2">
