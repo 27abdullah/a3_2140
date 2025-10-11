@@ -1,7 +1,7 @@
 import { Alert, Image, Pressable, Text, View } from "react-native";
 import { deleteRecord } from "../../scripts/app.js";
 
-export default function Card({ id, values, setRecord, map = false }) {
+export default function Card({ id, values, setRecords, map = false }) {
     const deleteHandler = async () => {
         if (map) return;
 
