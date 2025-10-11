@@ -1,5 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
-import { Text, TextInput, View } from "react-native";
+import * as Location from "expo-location";
+import { useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 function TextField({ is_num, setValue, value }) {
     return (
@@ -50,10 +52,34 @@ function DropdownField({ options, setValue, value }) {
     );
 }
 
-function LocationField() {
+function LocationField({ setValue, value }) {
+    const [errorMsg, setErrorMsg] = useState(null);
+
+    const getLocation = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+            setErrorMsg("Permission to access location was denied");
+            return;
+        }
+
+        let loc = await Location.getCurrentPositionAsync({});
+        setValue([loc.coords.latitude, loc.coords.longitude]);
+    };
+
     return (
         <View>
-            <Text>TODO</Text>
+            <Pressable
+                className="bg-violet-500 rounded-md p-3 mt-2 active:opacity-70"
+                onPress={getLocation}
+                disabled={value !== ""}
+            >
+                <Text className="text-white text-md text-center">
+                    {value !== ""
+                        ? `Lat: ${value[0]}, Lon: ${value[1]}`
+                        : "Get Location"}
+                </Text>
+            </Pressable>
+            {errorMsg ? <Text className="text-red-500">{errorMsg}</Text> : null}
         </View>
     );
 }

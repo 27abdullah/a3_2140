@@ -31,7 +31,9 @@ export default function Card({ id, values, setRecords }) {
                                 />
                             ) : (
                                 <Text className="text-base text-gray-900">
-                                    {field.value || "(empty)"}
+                                    {field.field_type == "location"
+                                        ? `Lat = ${field.value[0]}\nLon = ${field.value[1]}`
+                                        : field.value || "(empty)"}
                                 </Text>
                             )}
                         </View>
